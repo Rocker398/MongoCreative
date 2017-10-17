@@ -1,0 +1,151 @@
+body {
+	margin: 0;
+	background: url('corkboard.jpg');
+    background-size: contain;
+    background-repeat: repeat;
+    font-family: 'Cormorant', serif;
+    color: #dedede;
+}
+
+.header {
+    font-family: 'Cormorant', serif;
+    font-size: 26px;
+    font-weight: bold;
+    display: inline-block;
+}
+
+.addImageForm {
+	position: fixed;
+    bottom: 0;
+    width: 100%;
+    background: #272d2f;
+    margin: 0;
+    padding: 10px;
+    box-shadow: 0 -2px 5px #000000;
+}
+
+input {
+	margin-left: 25px;
+}
+
+.ImageCork {
+	position: absolute;
+	cursor: move;
+	width: 30%;
+	top: 5%;
+	left: 7%;
+}
+
+.ImageCork::before {
+	content: '';
+	background: url('pushpin.png');
+	background-size: contain;
+	width: 30px;
+	height: 30px;
+	position: absolute;
+	top: 0;
+	left: 0;
+	right: 0;
+	margin: auto;
+}
+
+.imageFrame::before, .imageFrame::after {
+	z-index: -1;
+    position: absolute;
+    content: "";
+    bottom: 15px;
+    left: 10px;
+    width: 50%;
+    top: 80%;
+    max-width: 300px;
+    background: #000;
+    box-shadow: 0 15px 10px #232323;
+    transform: rotate(-3deg);
+}
+
+.imageFrame::after {
+	transform: rotate(3deg);
+    right: 10px;
+    left: auto;
+}
+
+.imageFrame img {
+	width: 100%;
+}
+
+.corkboardContainer {
+    height: 100%;
+}
+
+span {
+    margin: 5px 32px 5px 0px;
+    float: right;
+}
+
+.range {
+  display: inline-block;
+  margin: 0px -10px 0px;
+  vertical-align: middle;
+}
+
+input[type=range] {
+  -webkit-appearance: none;
+  position: relative
+}
+
+input[type=range]::-webkit-slider-runnable-track {
+  width: 300px;
+  height: 2px;
+  border: none;
+  border-radius: 3px
+}
+
+input[type=range]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  border: none;
+  height: 12px;
+  width: 12px;
+  border-radius: 510%;
+  background: #141414;
+  border: 2px solid #515151;
+  margin-top: -5px;
+  cursor: pointer
+}
+
+input[type=range]:focus {
+  outline: none
+}
+
+.rangeM input[type=range].disabled::-webkit-slider-runnable-track {
+  background: #515151!important
+}
+
+.rangeM input[type=range]::-webkit-slider-thumb {
+  background: #3f51b5;
+  border-color: #3f51b5
+}
+
+.range:hover input[type=range]:before {
+  color: white;
+  content: '30';
+  position: absolute;
+  font-family: Roboto Slab;
+  top: -46px;
+  background: #3f51b5;
+  padding: 8px 0 3px;
+  font-size: 14px;
+  width: 30px;
+  text-align: center;
+  border-radius: 100% 100% 0 0
+}
+
+.range:hover input[type=range]:after {
+  content: '';
+  position: absolute;
+  top: -19px;
+  left: 30px;
+  border-left: 15px solid transparent;
+  border-right: 15px solid transparent;
+  border-top: 8px solid #3f51b5;
+  font-family: Roboto Slab
+}
