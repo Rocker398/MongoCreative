@@ -9,7 +9,6 @@
 		<link rel="stylesheet" type="text/css" href="style.css">
 	</head>
     <body ng-app="ImageCorkboard" ng-controller="MainCtrl">
-		
 		<div class="corkboardContainer">
 			<div class="imageList" ng-repeat="image in images">
 				<image-Cork image='image' index="{{$index}}" />
@@ -19,7 +18,7 @@
 			<div class="header">Project Corkboard</div>
 			<input type="text" class="form-control" placeholder="Image Url" ng-model="imageForm.Url"></input>
 			<button type="submit" class="btn btn-primary">Add Image</button>
-			<span>Size of pins:<input type="range" max="50" value="30"ng-model="width"></span>
+			<span>Size of pins:<input type="range" max="50" value="30" ng-model="width" ></span>
 		</form>
     </body>
 </html>

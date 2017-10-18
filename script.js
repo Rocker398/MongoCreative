@@ -3,7 +3,13 @@ angular.module('ImageCorkboard', [])
   .directive('imageCork', imageDirective);
 
 function mainCtrl ($scope) {
-	
+	var down = false;
+	$(document).mousedown(function() {
+		down = true;
+	}).mouseup(function() {
+		down = false;  
+	});
+
 	$scope.images = [];
 	$scope.width = 30;
 	
@@ -16,6 +22,20 @@ function mainCtrl ($scope) {
 		
 		setTimeout(triggerSlider, 0.1);
 	};
+
+	// $scope.widthChange = function() {
+	// 	var a = $('input[type=range]').val();
+	// 	console.log(a);
+	// 	$scope.width = a+'%';
+	// };
+
+	$scope.delete = function(image){
+		//if(down){
+			console.log(image);
+			$('.ImageCork').addClass('delete');
+			
+		//}
+	}
 }
 
 function triggerSlider() {
@@ -33,6 +53,7 @@ function imageDirective () {
 		template: (
 			'<div class="ImageCork" style="z-index:{{index}};">' +
 				'<div class="imageFrame">' +
+					'<img ng-click="delete(image)" class="trash" title="Remove" src="https://d30y9cdsu7xlg0.cloudfront.net/png/3823-200.png">'+
 					'<img ng-src="{{image.Url}}" />' +
 				'</div>' +
 			'</div>'
@@ -45,9 +66,14 @@ function imageDirective () {
 			scope.image.Url = 'placeholder.jpg';
 		}
 		elm.draggable({
+			cancel: ".trash",
 			cursor: "move",
 			containment: ".corkboardContainer"
 		});
+
+		elm.on('click', ".trash", function() {
+			$(this).closest('.ImageCork').addClass('delete');
+        });
 	}
 }
 
