@@ -22,20 +22,6 @@ function mainCtrl ($scope) {
 		
 		setTimeout(triggerSlider, 0.1);
 	};
-
-	// $scope.widthChange = function() {
-	// 	var a = $('input[type=range]').val();
-	// 	console.log(a);
-	// 	$scope.width = a+'%';
-	// };
-
-	$scope.delete = function(image){
-		//if(down){
-			console.log(image);
-			$('.ImageCork').addClass('delete');
-			
-		//}
-	}
 }
 
 function triggerSlider() {
@@ -53,7 +39,7 @@ function imageDirective () {
 		template: (
 			'<div class="ImageCork" style="z-index:{{index}};">' +
 				'<div class="imageFrame">' +
-					'<img ng-click="delete(image)" class="trash" title="Remove" src="https://d30y9cdsu7xlg0.cloudfront.net/png/3823-200.png">'+
+					'<div class="trash"><img title="Remove" src="https://d30y9cdsu7xlg0.cloudfront.net/png/3823-200.png"></div>'+
 					'<img ng-src="{{image.Url}}" />' +
 				'</div>' +
 			'</div>'
@@ -72,7 +58,8 @@ function imageDirective () {
 		});
 
 		elm.on('click', ".trash", function() {
-			$(this).closest('.ImageCork').addClass('delete');
+			var imageCork = $(this).closest('.imageList');
+			imageCork.addClass('delete');
         });
 	}
 }

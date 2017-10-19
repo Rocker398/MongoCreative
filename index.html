@@ -16,7 +16,7 @@
 		</div>
 		<form name="imageForm" ng-submit="addImage(imageForm)" class="addImageForm">
 			<div class="header">Project Corkboard</div>
-			<input type="text" class="form-control" placeholder="Image Url" ng-model="imageForm.Url"></input>
+			<input type="text" class="imageUrl form-control" placeholder="Image Url" ng-model="imageForm.Url"></input>
 			<button type="submit" class="btn btn-primary">Add Image</button>
 			<span>Size of pins:<input type="range" max="50" value="30" ng-model="width" ></span>
 		</form>

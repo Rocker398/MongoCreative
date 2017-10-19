@@ -1,10 +1,11 @@
 body {
 	margin: 0;
 	background: url('corkboard.jpg');
-    background-size: contain;
+    background-size: cover;
     background-repeat: repeat;
     font-family: 'Cormorant', serif;
     color: #dedede;
+	overflow: hidden;
 }
 
 .header {
@@ -151,14 +152,49 @@ input[type=range]:focus {
 }
 
 .trash{
-  width:6% !important;
-  position: absolute;
-  right:0;
-  top:1px;
+    width: 18px !important;
+    position: absolute;
+    right: 0;
+    top: 0px;
+    background: #ea4141;
+    padding: 3px;
+    border-bottom-left-radius: 2px;
+	cursor: pointer;
+}
+
+.trash img {
+	
+	-webkit-filter: invert(100%);
+	filter: invert(100%);
+}
+
+.trash:hover {
+	background: #e61a1a;
 }
 
 .delete
 {
     opacity:0;
     transition: opacity 1s;
+}
+
+.imageUrl {
+    padding: 6px;
+    vertical-align: top;
+    border-radius: 1px;
+    border: none;
+}
+
+.btn {
+    vertical-align: top;
+    padding: 6px 13px;
+    background: #3f51b5;
+    color: #ffffff;
+    border: none;
+    border-radius: 2px;
+	cursor: pointer;
+}
+
+.btn:hover {
+	background: #37469a;
 }
