@@ -1,0 +1,24 @@
+<html>
+	<head>
+		<title>Image Corkboard</title>
+		<script src="https://code.jquery.com/jquery-1.10.2.js"></script>
+		<script src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
+		<script src="javascripts/script.js"></script>
+		<link href="https://fonts.googleapis.com/css?family=Cormorant" rel="stylesheet">
+		<link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+	</head>
+    <body ng-app="ImageCorkboard" ng-controller="MainCtrl">
+		<div class="corkboardContainer">
+			<div class="imageList" ng-repeat="image in images">
+				<image-Cork image='image' index="{{$index}}" />
+			</div>
+		</div>
+		<form name="imageForm" ng-submit="addImage(imageForm)" class="addImageForm">
+			<div class="header">Project Corkboard</div>
+			<input type="text" class="imageUrl form-control" placeholder="Image Url" ng-model="imageForm.Url"></input>
+			<button type="submit" class="btn btn-primary">Add Image</button>
+			<span>Size of pins:<input type="range" max="50" value="30" ng-model="width" ></span>
+		</form>
+    </body>
+</html>
