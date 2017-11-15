@@ -2,7 +2,7 @@ angular.module('ImageCorkboard', [])
   .controller('MainCtrl', mainCtrl)
   .directive('imageCork', imageDirective);
 
-function mainCtrl ($scope) {
+function mainCtrl ($scope, $http) {
 	var down = false;
 	$(document).mousedown(function() {
 		down = true;
@@ -13,15 +13,37 @@ function mainCtrl ($scope) {
 	$scope.images = [];
 	$scope.width = 30;
 	
+	
 	$scope.addImage = function (image) {
-		$scope.images.push({ 
-			Url: image.Url
+		var myImage = {ImageURL: image.Url, Top: 0, Left: 0};
+		$http.post('/pins', myImage).success(function(data){
+			$scope.images.push(data);
 		});
 		
 		image.Url = '';
-		
 		setTimeout(triggerSlider, 0.1);
 	};
+
+	$scope.getAll = function(){
+		return $http.get('/pins').success(function(data){
+			angular.copy(data, $scope.images);
+		});
+	};
+	$scope.getAll();
+
+	$scope.delete = function(image){
+		console.log("in scope delete");
+		console.log(image._id);
+		return $http.delete('/pins/:'+image._id+'/delete')
+			.success(function(data){
+				var pos = $scope.images.indexOf(image);
+				if(pos>-1){
+					$scope.images.splice(pos,1);
+				}
+			});
+	}
+
+
 }
 
 function triggerSlider() {
@@ -39,8 +61,8 @@ function imageDirective () {
 		template: (
 			'<div class="ImageCork" style="z-index:{{index}};">' +
 				'<div class="imageFrame">' +
-					'<div class="trash"><img title="Remove" src="https://d30y9cdsu7xlg0.cloudfront.net/png/3823-200.png"></div>'+
-					'<img ng-src="{{image.Url}}" />' +
+					'<div class="trash" ng-click="delete(image)"><img title="Remove" src="https://d30y9cdsu7xlg0.cloudfront.net/png/3823-200.png"></div>'+
+					'<img ng-src="{{image.ImageURL}}" />' +
 				'</div>' +
 			'</div>'
 		), /* [3] */
@@ -48,8 +70,8 @@ function imageDirective () {
 	};
 
 	function link (scope, elm) { /* [4] */
-		if (!scope.image.Url) {
-			scope.image.Url = 'placeholder.jpg';
+		if (!scope.image.ImageURL) {
+			scope.image.ImageURL = 'placeholder.jpg';
 		}
 		elm.draggable({
 			cancel: ".trash",
@@ -57,10 +79,10 @@ function imageDirective () {
 			containment: ".corkboardContainer"
 		});
 
-		elm.on('click', ".trash", function() {
-			var imageCork = $(this).closest('.imageList');
-			imageCork.addClass('delete');
-        });
+		//elm.on('click', ".trash", function() {
+			//var imageCork = $(this).closest('.imageList');
+			//imageCork.addClass('delete');
+        	//});
 	}
 }
 
