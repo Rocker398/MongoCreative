@@ -89,6 +89,9 @@ function imageDirective ($http) {
 				//if(pos>-1){
 				//	$scope.images.splice(pos,1);
 				//}
+
+                                var imageListItem = $(imageCork).closest('.imageList');
+				imageListItem.addClass('delete');
 			});
 
 			
