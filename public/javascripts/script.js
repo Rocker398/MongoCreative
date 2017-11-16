@@ -15,7 +15,7 @@ function mainCtrl ($scope, $http) {
 	
 	
 	$scope.addImage = function (image) {
-		var myImage = {ImageURL: image.Url, Top: 0, Left: 0};
+		var myImage = {ImageURL: image.Url, Top: 30, Left: 30};
 		$http.post('/pins', myImage).success(function(data){
 			$scope.images.push(data);
 		});
@@ -50,18 +50,18 @@ function triggerSlider() {
 	$('input[type=range]').trigger('input');
 };
 
-function imageDirective () {
+function imageDirective ($http) {
 	return {
 		scope: {
 			image: '=', /* [1] */
-			index: '@'
+			index: '@',
 		},
 		restrict: 'E', /* [2] */
 		replace: 'true',
 		template: (
-			'<div class="ImageCork" style="z-index:{{index}};">' +
-				'<div class="imageFrame">' +
-					'<div class="trash" ng-click="delete(image)"><img title="Remove" src="https://d30y9cdsu7xlg0.cloudfront.net/png/3823-200.png"></div>'+
+			'<div class="ImageCork" style="z-index:{{index}}; left:{{image.Left}}; top: {{image.Top}}">' +
+				'<div id={{image._id}} class="imageFrame">' +
+					'<div class="trash"><img title="Remove" src="https://d30y9cdsu7xlg0.cloudfront.net/png/3823-200.png"></div>'+
 					'<img ng-src="{{image.ImageURL}}" />' +
 				'</div>' +
 			'</div>'
@@ -79,10 +79,21 @@ function imageDirective () {
 			containment: ".corkboardContainer"
 		});
 
-		//elm.on('click', ".trash", function() {
-			//var imageCork = $(this).closest('.imageList');
-			//imageCork.addClass('delete');
-        	//});
+		elm.on('click', ".trash", function(e) {
+			var imageCork = $(this).closest('.imageFrame');
+			var id = imageCork[0].id;
+			return $http.delete('/pins/'+id)
+			.success(function(data){
+				
+				//var pos = $scope.images.indexOf(image);
+				//if(pos>-1){
+				//	$scope.images.splice(pos,1);
+				//}
+			});
+
+			
+        	});
+
 	}
 }
 

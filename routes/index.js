@@ -45,12 +45,14 @@ router.get('/pins/:pin', function(req, res) {
 	res.json(req.pin);
 });
 
-router.delete('/pins/:pin/delete', function(req, res, next) {
+router.delete('/pins/:pin', function(req, res, next) {
 	console.log('in router delete');
-	req.pin.delete(function(err, pin){
-		if(err) { return next(err) };
-		res.json(pin);
-	});
+	req.pin.remove();
+	res.sendStatus(200);
+	//req.pin.delete(function(err, pin){
+	//	if(err) { return next(err) };
+	//	res.json(pin);
+	//});
 });
 
 module.exports = router;
