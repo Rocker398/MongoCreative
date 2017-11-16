@@ -34,7 +34,7 @@ function mainCtrl ($scope, $http) {
 	$scope.delete = function(image){
 		console.log("in scope delete");
 		console.log(image._id);
-		return $http.delete('/pins/:'+image._id+'/delete')
+		return $http.delete('/pins/'+image._id+'/delete')
 			.success(function(data){
 				var pos = $scope.images.indexOf(image);
 				if(pos>-1){
@@ -76,7 +76,16 @@ function imageDirective ($http) {
 		elm.draggable({
 			cancel: ".trash",
 			cursor: "move",
-			containment: ".corkboardContainer"
+			containment: ".corkboardContainer",
+			stop: function(event, ui) {
+				var imageCork = $(ui.helper.context).find('.imageFrame');
+                        	var id = imageCork[0].id;
+
+				return $http.put('/pins/' + id + '/' + ui.position.top + '/' + ui.position.left)
+					.success(function(data) {
+						// do nothing
+					});
+			}
 		});
 
 		elm.on('click', ".trash", function(e) {

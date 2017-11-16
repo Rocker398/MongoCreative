@@ -17,7 +17,7 @@ router.get('/pins', function(req, res, next) {
 });
 
 router.post('/pins', function(req, res, next) {
-  console.log(req);
+  //console.log(req);
   var pin = new Pins(req.body);
 	console.log("after line");
   pin.save(function(err, pin) {
@@ -53,6 +53,27 @@ router.delete('/pins/:pin', function(req, res, next) {
 	//	if(err) { return next(err) };
 	//	res.json(pin);
 	//});
+});
+
+router.param('top', function(req, res, next, top) {
+	req.top = top;
+	return next();
+});
+
+router.param('left', function(req, res, next, left) {
+	req.left = left;
+	return next();
+});
+
+router.put('/pins/:pin/:top/:left', function(req, res, next) {
+	console.log('in router put');
+	Pins.update({_id: req.pin._id}, {
+    		Top: req.top, 
+    		Left: req.left
+	}, function(err, numberAffected, rawResponse) {
+   		//handle it
+	})
+	res.sendStatus(200);
 });
 
 module.exports = router;
